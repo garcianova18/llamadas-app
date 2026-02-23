@@ -1,0 +1,530 @@
+/* ============================================================
+   CallShared.css
+   Sistema de temas con variables CSS.
+   - Modo oscuro (default): variables en :root y .dark
+   - Modo claro: variables sobreescritas en :root:not(.dark)
+   Tailwind controla el tema añadiendo/quitando la clase `dark`
+   en el elemento <html>. Los componentes no necesitan cambiar.
+   ============================================================ */
+
+
+/* ── Variables — Modo OSCURO (default) ───────────────────────
+   Son los valores originales del diseño. Se aplican cuando
+   el <html> tiene la clase `dark`.
+   ---------------------------------------------------------- */
+:root,
+.dark {
+    /* Fondo de página */
+    /* --call-page-bg-base:        #080c14;
+    --call-page-gradient-blue:  rgba(59, 130, 246, 0.08);
+    --call-page-gradient-green: rgba(16, 185, 129, 0.06); */
+
+    /* Grid decorativo */
+    /* --call-grid-line:           rgba(148, 163, 184, 0.03); */
+
+    /* Tarjeta */
+    --call-card-bg:             rgba(15, 23, 42, 0.85);
+    --call-card-border:         rgba(148, 163, 184, 0.2);
+    --call-card-shadow-inner:   rgba(255, 255, 255, 0.03);
+    --call-card-shadow-outer:   rgba(0, 0, 0, 0.6);
+
+    /* Wave visualizer */
+    --call-wave-bg:             rgba(15, 23, 42, 0.5);
+    --call-wave-border:         rgba(148, 163, 184, 0.1);
+    --call-wave-label:          #64748b;
+
+    /* Barra de controles */
+    --call-controls-bg:         rgba(15, 23, 42, 0.5);
+    --call-controls-border:     rgba(148, 163, 184, 0.1);
+    --call-controls-sep:        rgba(148, 163, 184, 0.1);
+
+    /* Ícono de control (estado normal) */
+    --call-ctrl-icon-bg:        rgba(30, 41, 59, 0.6);
+    --call-ctrl-icon-border:    rgba(148, 163, 184, 0.2);
+    --call-ctrl-label:          #64748b;
+
+    /* Toasts */
+    --call-toast-shadow:        rgba(0, 0, 0, 0.4);
+
+    /* Toast text — oscuro: colores vibrantes */
+    --call-toast-success-text:  #6ee7b7;
+    --call-toast-error-text:    #fca5a5;
+    --call-toast-info-text:     #93c5fd;
+    --call-toast-warning-text:  #fcd34d;
+}
+
+
+/* ── Variables — Modo CLARO ──────────────────────────────────
+   Se activan cuando el <html> NO tiene la clase `dark`.
+   Tailwind en modo `class` quita `dark` del html al cambiar
+   al tema claro, así que este selector funciona directamente.
+   ---------------------------------------------------------- */
+:root:not(.dark) {
+    /* Fondo de página — gris claro neutro */
+    /* --call-page-bg-base:        #f1f5f9;
+    --call-page-gradient-blue:  rgba(59, 130, 246, 0.06);
+    --call-page-gradient-green: rgba(16, 185, 129, 0.04); */
+
+    /* Grid decorativo — más tenue en claro */
+    /* --call-grid-line:           rgba(100, 116, 139, 0.06); */
+
+    /* Tarjeta — blanco semitransparente con sombra suave */
+    --call-card-bg:             rgba(255, 255, 255, 0.9);
+    --call-card-border:         rgba(148, 163, 184, 0.35);
+    --call-card-shadow-inner:   rgba(0, 0, 0, 0.02);
+    --call-card-shadow-outer:   rgba(0, 0, 0, 0.12);
+
+    /* Wave visualizer — fondo muy claro */
+    --call-wave-bg:             rgba(241, 245, 249, 0.8);
+    --call-wave-border:         rgba(148, 163, 184, 0.25);
+    --call-wave-label:          #94a3b8;
+
+    /* Barra de controles — blanco suave */
+    --call-controls-bg:         rgba(248, 250, 252, 0.9);
+    --call-controls-border:     rgba(148, 163, 184, 0.25);
+    --call-controls-sep:        rgba(148, 163, 184, 0.25);
+
+    /* Ícono de control (estado normal) */
+    --call-ctrl-icon-bg:        rgba(241, 245, 249, 0.9);
+    --call-ctrl-icon-border:    rgba(148, 163, 184, 0.3);
+    --call-ctrl-label:          #94a3b8;
+
+    /* Toasts — sombra más suave en claro */
+    --call-toast-shadow:        rgba(0, 0, 0, 0.12);
+
+    /* Toast text — claro: colores oscuros para contraste */
+    --call-toast-success-text:  #065f46;
+    --call-toast-error-text:    #991b1b;
+    --call-toast-info-text:     #1e40af;
+    --call-toast-warning-text:  #92400e;
+}
+
+
+/* ============================================================
+   Estilos de componentes — consumen variables, no valores fijos
+   ============================================================ */
+
+
+/* ── Fondo de página ─────────────────────────────────────────
+   Gradiente radial doble. Tailwind no lo soporta sin config
+   personalizada, por eso vive aquí.
+   ---------------------------------------------------------- */
+.call-page {
+    min-height: 100vh;
+    background:
+        radial-gradient(ellipse at 20% 20%, var(--call-page-gradient-blue)  0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, var(--call-page-gradient-green) 0%, transparent 50%),
+        var(--call-page-bg-base);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+
+/* ── Grid decorativo de fondo ────────────────────────────────
+   Cuadrícula tenue formada por dos linear-gradient superpuestos.
+   No replicable en Tailwind base sin plugin.
+   ---------------------------------------------------------- */
+.call-bg-grid {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+        linear-gradient(var(--call-grid-line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--call-grid-line) 1px, transparent 1px);
+    background-size: 40px 40px;
+    z-index: 0;
+}
+
+
+/* ── Tarjeta principal ───────────────────────────────────────
+   backdrop-filter + box-shadow compuesto. Tailwind base no
+   cubre estos valores sin config extendida.
+   ---------------------------------------------------------- */
+.call-card {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 500px;
+    background: var(--call-card-bg);
+    border: 1px solid var(--call-card-border);
+    border-radius: 24px;
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    box-shadow:
+        0 0 0 1px var(--call-card-shadow-inner),
+        0 32px 80px var(--call-card-shadow-outer);
+    overflow: hidden;
+}
+
+
+/* ── Visualizador de onda (canvas wrapper) ───────────────────
+   Posicionamiento absoluto del canvas + transiciones de
+   border-color y box-shadow con colores semánticos.
+   ---------------------------------------------------------- */
+.wave-container {
+    position: relative;
+    height: 72px;
+    border-radius: 14px;
+    background: var(--call-wave-bg);
+    border: 1px solid var(--call-wave-border);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.4s, box-shadow 0.4s;
+}
+
+/* Estado: hablando activamente — verde */
+.wave-container.speaking {
+    border-color: rgba(16, 185, 129, 0.3);
+    box-shadow: 0 0 30px rgba(16, 185, 129, 0.1);
+}
+
+/* Estado: micrófono silenciado — ámbar */
+.wave-container.muted {
+    border-color: rgba(245, 158, 11, 0.3);
+    box-shadow: 0 0 30px rgba(245, 158, 11, 0.08);
+}
+
+/* El canvas ocupa todo el wrapper */
+.wave-container canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Label flotante sobre el canvas */
+.wave-label {
+    position: relative;
+    z-index: 1;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--call-wave-label);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+}
+
+/* El color del label cambia según el estado activo */
+.wave-container.speaking .wave-label { color: #10b981; }
+.wave-container.muted    .wave-label { color: #f59e0b; }
+
+
+/* ── Barra de controles (Mute / Grabar) ─────────────────────
+   Animación de entrada slideIn + fondo semitransparente.
+   ---------------------------------------------------------- */
+.controls-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 0.875rem 1rem;
+    background: var(--call-controls-bg);
+    border: 1px solid var(--call-controls-border);
+    border-radius: 16px;
+    animation: slideIn 0.3s ease;
+}
+
+/* Separador vertical entre Mute y Grabar */
+.controls-sep {
+    width: 1px;
+    height: 36px;
+    background: var(--call-controls-sep);
+    flex-shrink: 0;
+}
+
+/* Columna: ícono arriba, label abajo */
+.ctrl-btn-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+/* Caja visual que envuelve el MUI IconButton */
+.ctrl-icon-box {
+    width: 44px;
+    height: 44px;
+    border-radius: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--call-ctrl-icon-border);
+    background: var(--call-ctrl-icon-bg);
+    transition: all 0.2s;
+}
+
+/* Estado activo: silenciado — glow ámbar
+   Igual en ambos temas porque es un indicador de acción. */
+.ctrl-icon-box.mute-active {
+    background: rgba(245, 158, 11, 0.15);
+    border-color: rgba(245, 158, 11, 0.35);
+    box-shadow: 0 0 18px rgba(245, 158, 11, 0.2);
+}
+
+/* Estado activo: grabando — glow rojo pulsante
+   Igual en ambos temas porque es un indicador de acción. */
+.ctrl-icon-box.rec-active {
+    background: rgba(239, 68, 68, 0.15);
+    border-color: rgba(239, 68, 68, 0.35);
+    box-shadow: 0 0 18px rgba(239, 68, 68, 0.2);
+    animation: recPulse 1.5s infinite;
+}
+
+/* Label debajo del ícono */
+.ctrl-label {
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--call-ctrl-label);
+    transition: color 0.2s;
+    font-family: 'DM Sans', sans-serif;
+}
+
+/* Color del label cuando el control está activo */
+.ctrl-label.mute-on { color: #f59e0b; }
+.ctrl-label.rec-on  { color: #ef4444; }
+
+
+/* ── Indicador REC en el header ──────────────────────────────
+   Punto pulsante rojo. Es semántico, igual en ambos temas.
+   ---------------------------------------------------------- */
+.rec-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.68rem;
+    font-family: 'DM Mono', monospace;
+    color: #ef4444;
+    font-weight: 500;
+}
+
+.rec-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #ef4444;
+    animation: pulse 1s infinite;
+}
+
+
+/* ── Dot del badge de estado de conexión ─────────────────────
+   El color se aplica inline desde el componente (status.color).
+   Solo se define la forma y la animación de pulso aquí.
+   ---------------------------------------------------------- */
+.status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    transition: background 0.3s;
+}
+
+.status-dot.pulse { animation: pulse 1.5s infinite; }
+
+
+/* ── Toasts (notificaciones flotantes) ───────────────────────
+   backdrop-filter no es Tailwind base. La sombra varía según
+   el tema via variable. Los colores de fondo/borde son iguales
+   en ambos temas; el texto cambia via variable para contraste.
+   ---------------------------------------------------------- */
+.toast-list {
+    position: fixed;
+    top: 1.5rem;
+    right: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    z-index: 1000;
+    pointer-events: none;
+}
+
+.toast-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.7rem 1rem;
+    border-radius: 13px;
+    backdrop-filter: blur(20px);
+    font-size: 0.82rem;
+    font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    animation: toastIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    pointer-events: all;
+    cursor: pointer;
+    min-width: 220px;
+    max-width: 300px;
+    box-shadow: 0 8px 32px var(--call-toast-shadow);
+}
+
+/* Fondo y borde iguales en ambos temas (semitransparentes) */
+.toast-item.success { background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); color: var(--call-toast-success-text); }
+.toast-item.error   { background: rgba(239, 68, 68,  0.15); border: 1px solid rgba(239, 68, 68,  0.3); color: var(--call-toast-error-text);   }
+.toast-item.info    { background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.3); color: var(--call-toast-info-text);    }
+.toast-item.warning { background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.3); color: var(--call-toast-warning-text); }
+
+
+/* ── Keyframes ───────────────────────────────────────────────
+   No dependen del tema. Se definen una sola vez y los
+   reutilizan todos los elementos que los necesitan.
+   ---------------------------------------------------------- */
+
+/* Entrada desde arriba — barra de controles al aparecer */
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Entrada desde la derecha — toasts */
+@keyframes toastIn {
+    from { opacity: 0; transform: translateX(16px) scale(0.95); }
+    to   { opacity: 1; transform: translateX(0)    scale(1); }
+}
+
+/* Pulso genérico — usado por rec-dot y status-dot */
+@keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.5; transform: scale(0.8); }
+}
+
+/* Pulso del glow rojo — ctrl-icon-box cuando está grabando */
+@keyframes recPulse {
+    0%, 100% { box-shadow: 0 0 18px rgba(239, 68, 68, 0.2); }
+    50%       { box-shadow: 0 0 28px rgba(239, 68, 68, 0.45); }
+}
+
+/* Glow verde pulsante — reservado para uso futuro */
+@keyframes callGlow {
+    0%, 100% { box-shadow: 0 0 0 0   rgba(16, 185, 129, 0.3); }
+    50%       { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+}
+
+
+/* ============================================================
+   Clases temáticas para componentes MUI
+   MUI aplica estilos en JS (sx prop) y no puede leer las
+   clases dark: de Tailwind. Para estos casos se usan clases
+   CSS normales que sí respetan el selector .dark del <html>.
+   ============================================================ */
+
+
+/* ── Chip de rol (caller / callee) ───────────────────────────
+   Se aplica como className en el componente MUI Chip.
+   El sx solo pone tipografía y forma; el color viene aquí.
+   ---------------------------------------------------------- */
+
+/* Receptor (callee) — verde */
+/* .chip-receiver {
+    background-color: rgba(16, 185, 129, 0.12) !important;
+    color:            #047857                  !important;
+    border:           1px solid rgba(16, 185, 129, 0.3) !important;
+}
+.dark .chip-receiver {
+    background-color: rgba(16, 185, 129, 0.15) !important;
+    color:            #6ee7b7                  !important;
+    border:           1px solid rgba(16, 185, 129, 0.25) !important;
+} */
+
+/* Emisor (caller) — azul */
+.chip-sender {
+    background-color: rgba(59, 130, 246, 0.1)  !important;
+    color:            #1d4ed8                   !important;
+    border:           1px solid rgba(59, 130, 246, 0.3) !important;
+}
+.dark .chip-sender {
+    background-color: rgba(59, 130, 246, 0.15) !important;
+    color:            #93c5fd                   !important;
+    border:           1px solid rgba(59, 130, 246, 0.25) !important;
+}
+
+
+/* ── IconButton: estado normal (Mute / Rec sin activar) ──────
+   Color del ícono cuando el control está en reposo.
+   ---------------------------------------------------------- */
+.icon-default {
+    color: #94a3b8 !important; /* slate-400 — mismo en ambos temas */
+}
+.icon-default:hover {
+    color: #334155 !important; /* slate-700 en light */
+}
+.dark .icon-default:hover {
+    color: #e2e8f0 !important; /* slate-200 en dark */
+}
+
+
+/* ── IconButton: micrófono silenciado (mute activo) ──────────
+   Color ámbar en ambos temas, ligeramente más intenso en light
+   para garantizar contraste sobre fondo claro.
+   ---------------------------------------------------------- */
+.icon-mute-active {
+    color: #d97706 !important; /* amber-600 en light */
+}
+.icon-mute-active:hover {
+    color: #b45309 !important; /* amber-700 en light */
+}
+.dark .icon-mute-active {
+    color: #f59e0b !important; /* amber-400 en dark */
+}
+.dark .icon-mute-active:hover {
+    color: #fbbf24 !important; /* amber-300 en dark */
+}
+
+
+/* ── IconButton: grabando (rec activo) ───────────────────────
+   Color rojo en ambos temas, ligeramente más oscuro en light.
+   ---------------------------------------------------------- */
+.icon-rec-active {
+    color: #dc2626 !important; /* red-600 en light */
+}
+.icon-rec-active:hover {
+    color: #b91c1c !important; /* red-700 en light */
+}
+.dark .icon-rec-active {
+    color: #ef4444 !important; /* red-400 en dark */
+}
+.dark .icon-rec-active:hover {
+    color: #f87171 !important; /* red-300 en dark */
+}
+
+
+/* ── IconButton: botón copiar link (estado normal) ───────────
+   Borde, fondo y color del ícono en estado por defecto.
+   ---------------------------------------------------------- */
+.copy-btn-default {
+    color:            #94a3b8                   !important;
+    background-color: rgba(241, 245, 249, 0.9)  !important;
+    border-color:     rgba(148, 163, 184, 0.35) !important;
+}
+.copy-btn-default:hover {
+    color:            #334155                  !important;
+    background-color: rgba(0, 0, 0, 0.04)     !important;
+}
+.dark .copy-btn-default {
+    color:            #64748b                   !important;
+    background-color: rgba(30, 41, 59, 0.6)    !important;
+    border-color:     rgba(148, 163, 184, 0.2)  !important;
+}
+.dark .copy-btn-default:hover {
+    color:            #e2e8f0                  !important;
+    background-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+
+/* ── IconButton: botón copiar link (estado copiado ✓) ────────
+   Verde para confirmar que se copió al portapapeles.
+   Igual visualmente en ambos temas, solo varía la intensidad.
+   ---------------------------------------------------------- */
+.copy-btn-ok {
+    color:            #059669                   !important;
+    background-color: rgba(16, 185, 129, 0.1)   !important;
+    border-color:     rgba(16, 185, 129, 0.4)   !important;
+}
+.dark .copy-btn-ok {
+    color:            #10b981                   !important;
+    background-color: rgba(16, 185, 129, 0.08)  !important;
+    border-color:     rgba(16, 185, 129, 0.3)   !important;
+}
